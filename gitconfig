@@ -1,0 +1,47 @@
+[color]
+  diff = auto
+  grep = auto
+  interactive = auto
+  status = auto
+  branch = auto
+  status = auto
+  ui = auto
+
+[alias]
+  st = status
+  ci = commit
+  cm = commit -m
+  b = branch
+  d = diff
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  ls = log --pretty=format:"%C(green)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  ll = log --pretty=format:"%C(green)%h%Cred%d\\ %Cred%s%Cblue\\ [%cn]" --decorate --numstat
+  co = checkout
+  pom = push origin master
+  ps = push
+  pl = pull
+  dlc = diff --cached HEAD^
+  me = config user.email "opingow@gmail.com"
+
+[user]
+	name = Bernardo Chaves
+	email = bernardo.amc@gmail.com
+
+[core]
+  excludesfile = ~/.gitignore
+  autoclrf = input
+
+[editor]
+editor = vim
+
+[hub]
+protocol = https
+
+[merge]
+ff = false
+
+[push]
+	default = current
+
+[pull]
+rebase = true

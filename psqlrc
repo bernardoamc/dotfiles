@@ -1,0 +1,15 @@
+\set ON_ERROR_ROLLBACK interactive
+\set COMP_KEYWORD_CASE upper
+\set HISTFILE ~/.psql/history- :DBNAME
+
+\pset pager off
+\pset null '(null)'
+
+-- Set \timing on to log the time that each query took to run
+\timing
+
+-- All SQL statements that run for the time specified or longer will be logged with their duration
+-- \set log_min_duration_statement 0
+
+-- Show columns horizontally if there is space of in vertical if there is not
+\x auto
