@@ -1,7 +1,9 @@
- execute pathogen#infect()
+execute pathogen#infect()
 
- set number
- set ruler
+set shell=/bin/bash
+
+set number
+set ruler
 
 " colors
 set t_Co=256
@@ -77,6 +79,14 @@ color summerfruit256
  map <leader>b :Gblame<cr>
  map <leader>l :!clear && git log -p %<cr>
  map <leader>d :!clear && git diff %<cr>
+ map <leader>y :!pbcopy<bar>pbpaste<cr>
+
+ let g:go_highlight_functions = 1
+ let g:go_highlight_methods = 1
+ let g:go_highlight_fields = 1
+ let g:go_highlight_types = 1
+ let g:go_highlight_operators = 1
+ let g:go_highlight_build_constraints = 1
 
 " run test with ,r
  function! RunFileWithRspec()
@@ -134,7 +144,7 @@ color summerfruit256
 
 "ctags
 set tags=./tags;/
-nnoremap <leader>] <C-]>:ts<cr>
+nnoremap <leader>. :CtrlPTag<cr>
 
 " remap bufexplorer
 nnoremap <leader>e :BufExplorer<cr>
@@ -157,20 +167,3 @@ inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 " toggle class methods
 map <leader>l :TlistToggle<cr>
 map <BS> :noh<CR>
-
-"expand splits
-nnoremap <leader>= :vertical resize +5<cr>
-nnoremap <leader>- :vertical resize -5<cr>
-
-"Go
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
