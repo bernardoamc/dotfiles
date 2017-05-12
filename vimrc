@@ -19,11 +19,9 @@ color summerfruit256
 " Set the leader key
  let mapleader = ","
 
-" ctrlp config
- let g:ctrlp_map = '<leader>f'
- let g:ctrlp_max_height = 30
- let g:ctrlp_working_path_mode = 0
- let g:ctrlp_match_window_reversed = 0
+"FZF
+ set rtp+=/usr/local/opt/fzf
+ map <leader>f :FZF<CR>
 
 "Silver Searcher
  map <leader>a :Ag!<space>
@@ -87,6 +85,8 @@ color summerfruit256
  let g:go_highlight_types = 1
  let g:go_highlight_operators = 1
  let g:go_highlight_build_constraints = 1
+
+ let g:rustfmt_autosave = 1
 
 " run test with ,r
  function! RunFileWithRspec()

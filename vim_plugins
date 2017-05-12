@@ -1,6 +1,5 @@
 ag
 bufexplorer
-ctrlp
 tcomment
 taglist_46
 vim-buftabline
@@ -8,3 +7,4 @@ vim-elixir
 vim-fugitive
 vim-go
 vim-surround
+fzf
