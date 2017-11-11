@@ -16,6 +16,7 @@ alias volmer='bundle exec rubocop $(git diff-files --name-only -0)'
 alias be='bundle exec'
 alias fzfp="fzf --preview 'head -100 {}'"
 alias fzfv='vim $(fzfp)'
+alias gitrb='git branch --sort=-committerdate | head -n 10'
 
 function _ruby_ps1 {
   ruby -e "puts RUBY_VERSION"
