@@ -15,8 +15,9 @@ alias ctag='/usr/local/Cellar/ctags/5.8_1/bin/ctags -R --exclude=.git --exclude=
 alias volmer='bundle exec rubocop $(git diff-files --name-only -0)'
 alias be='bundle exec'
 alias fzfp="fzf --preview 'head -100 {}'"
-alias fzfv='vim $(fzfp)'
-alias gitrb='git branch --sort=-committerdate | head -n 10'
+alias fzfv='vi $(fzfp)'
+alias git_recent_branches='git branch --sort=-committerdate | head -n 10'
+alias git_clean_branches='git branch --merged | ack --invert-match "\*|master" | xargs git branch -d'
 
 function _ruby_ps1 {
   ruby -e "puts RUBY_VERSION"
