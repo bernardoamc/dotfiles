@@ -2,13 +2,15 @@ source ~/.git-completion.sh
 source ~/.git-prompt.sh
 source ~/.shareallthethings.sh
 
-export PATH="/usr/local/bin:$PATH"
+export PATH="$PATH:/usr/local/bin"
 export SHELL="/usr/local/bin/bash"
 export BUNDLE_JOBS=4
 
 export GOPATH="$HOME/labs/go"
 export RUSTPATH="$HOME/.cargo/bin"
 export PATH=$PATH:$GOPATH/bin:$RUSTPATH
+
+export EDITOR=vim
 
 # aliases
 alias ctag='/usr/local/Cellar/ctags/5.8_1/bin/ctags -R --exclude=.git --exclude=log *'
@@ -18,6 +20,24 @@ alias fzfp="fzf --preview 'head -100 {}'"
 alias fzfv='vi $(fzfp)'
 alias git_recent_branches='git branch --sort=-committerdate | head -n 10'
 alias git_clean_branches='git branch --merged | ack --invert-match "\*|master" | xargs git branch -d'
+alias git_fzf='git show $(git log --pretty=oneline | fzf | cut -d" " -f1)'
+alias git_cor='git co $(git_recent_branches | fzf)'
+alias git_ste='vi $(git status -s | fzf -m)'
+alias crypto_price='coinmon -c cad'
+alias serve='ruby -run -e httpd . -p 9090'
+alias venv='source ./virtualenv/bin/activate'
+alias runtest='bundle exec ruby -I ./test'
+alias clear-elasticsearch='curl -X DELETE "http://localhost:9200/*/"'
+alias kill-railgun='railgun status -a | tail -n +2 | cut -d " " -f1 | xargs -n 1 railgun stop'
+alias clear-yarn="ruby -r json -r fileutils -e \"JSON.parse(File.read('config/npm_packages.json')).each { |dir| FileUtils.rm_rf(dir + '/node_modules') }\" && yarn cache clean"
+
+function inspect-cert {
+  openssl x509 -noout -text -in $1
+}
+
+function inspect-csr {
+  openssl req -noout -text -in $1
+}
 
 function _ruby_ps1 {
   ruby -e "puts RUBY_VERSION"
