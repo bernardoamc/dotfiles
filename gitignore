@@ -1,0 +1,13 @@
+.DS_Store
+nohup.out
+*.sublime-project
+*.sublime-workspace
+node_modules
+.env
+virtualenv
+gin-bin
+scratch.*
+.idea
+.dev
+npm-debug.log
+yarn-error.log
