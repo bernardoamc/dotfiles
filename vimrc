@@ -1,13 +1,53 @@
-execute pathogen#infect()
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Packages
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'junegunn/fzf'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-commentary'
+Plugin 'kana/vim-textobj-user'
+Plugin 'mileszs/ack.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'itchyny/lightline.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'tpope/vim-surround'
+
+" Additional language support
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'elzr/vim-json'
+Plugin 'rstacruz/sparkup'
+Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'lambdatoast/elm.vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'cespare/vim-toml'
+Plugin 'rhysd/vim-crystal'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'
+
+" Colour schemes
+Plugin 'trusktr/seti.vim'
+
+call vundle#end()
+filetype plugin indent on
+
+set background=dark
+let t_Co = 265
+colorscheme seti
 
 set shell=/bin/bash
 
 set number
 set ruler
-
-" colors
-set t_Co=256
-color summerfruit256
 
 " use the system clipboard
  set clipboard=unnamed
@@ -23,8 +63,19 @@ color summerfruit256
  set rtp+=/usr/local/opt/fzf
  map <leader>f :FZF<CR>
 
-"Silver Searcher
- map <leader>a :Ag!<space>
+" Use rg instead of ack
+ let g:ackprg = 'rg --vimgrep'
+
+" vim-markdown
+ let g:vim_markdown_folding_disabled = 1
+
+" vim-json
+ let g:vim_json_syntax_conceal = 0
+
+" vim-ruby
+ let g:ruby_indent_access_modifier_style = 'normal'
+ let g:ruby_indent_assignment_style = 'variable'
+ let g:ruby_indent_block_style = 'do'
 
 " Hides buffer instead of closing them
  set hidden
@@ -35,9 +86,6 @@ color summerfruit256
  set expandtab
 
  set encoding=utf-8
-
-" Set a column at 80 character
-" set colorcolumn=80
 
 " Highlight searches
  set hlsearch
@@ -70,100 +118,38 @@ color summerfruit256
 
  set nocompatible      " We're running Vim, not Vi!
  syntax on             " Enable syntax highlighting
- filetype on           " Enable filetype detection
- filetype plugin on    " Enable filetype-specific plugins
+ filetype plugin indent on
 
 " map git commands
  map <leader>b :Gblame<cr>
- map <leader>l :!clear && git log -p %<cr>
- map <leader>d :!clear && git diff %<cr>
  map <leader>y :!pbcopy<bar>pbpaste<cr>
 
- let g:go_highlight_functions = 1
- let g:go_highlight_methods = 1
- let g:go_highlight_fields = 1
- let g:go_highlight_types = 1
- let g:go_highlight_operators = 1
- let g:go_highlight_build_constraints = 1
-
- let g:rustfmt_autosave = 1
-
-" run test with ,r
- function! RunFileWithRspec()
-   exec ":!NO_DEPRECATIONS=1 bin/rspec %:p"
- endfunction
-
-" run test with ,t
- function! RunTests(filename)
-  :w
-  :silent !clear
-  if match(a:filename, '\.feature$') != -1
-    exec ":!script/features " . a:filename
-  elseif match(a:filename, '_test\.rb$') != -1
-    exec ":!ruby -Itest " . a:filename
-  else
-    if filereadable("script/test")
-      exec ":!script/test " . a:filename
-    elseif filereadable("Gemfile")
-      exec ":!bundle exec rspec --color " . a:filename
-    else
-      exec ":!rspec --color " . a:filename
-    end
-  end
- endfunction
-
- function! SetTestFile()
-   let t:grb_test_file=@%
- endfunction
-
- function! RunTestFile(...)
-  if a:0
-    let command_suffix = a:1
-  else
-    let command_suffix = ""
-  endif
-
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
-  if in_test_file
-    call SetTestFile()
-  elseif !exists("t:grb_test_file")
-    return
-  end
-  call RunTests(t:grb_test_file . command_suffix)
- endfunction
-
- function! RunNearestTest()
-  let spec_line_number = line('.')
-  call RunTestFile(":" . spec_line_number . " -b")
- endfunction
-
-" run test runner
- map <leader>t :call RunTestFile()<cr>
- map <leader>T :call RunNearestTest()<cr>
- map <leader>r :call RunFileWithRspec()<cr>
-
 "ctags
-set tags=./tags;/
-nnoremap <leader>. :CtrlPTag<cr>
+ set tags=./tags;/
+ nnoremap <leader>. :CtrlPTag<cr>
 
 " remap bufexplorer
-nnoremap <leader>e :BufExplorer<cr>
+ nnoremap <leader>e :BufExplorer<cr>
 
 " Tab completion
 " will insert tab at beginning of line,
 " will use completion if not at beginning
-set wildmode=list:longest,list:full
-set complete=.,w,t
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+ set wildmode=list:longest,list:full
+ set complete=.,w,t
+ function! InsertTabWrapper()
+     let col = col('.') - 1
+     if !col || getline('.')[col - 1] !~ '\k'
+         return "\<tab>"
+     else
+         return "\<c-p>"
+     endif
+ endfunction
+ inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 
 " toggle class methods
-map <leader>l :TlistToggle<cr>
-map <BS> :noh<CR>
+ map <leader>l :TlistToggle<cr>
+ map <BS> :noh<CR>
+
+" NerdTree
+" NERDTree
+ nnoremap <leader>t :NERDTreeToggle<CR>
