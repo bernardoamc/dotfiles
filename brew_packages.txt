@@ -11,3 +11,4 @@ shellcheck
 ctags
 httpie
 tldr
+hugo
