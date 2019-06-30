@@ -1,16 +1,14 @@
 source ~/.git-completion.sh
 source ~/.git-prompt.sh
-source ~/.shareallthethings.sh
 
 export PATH="$PATH:/usr/local/bin"
 export SHELL="/usr/local/bin/bash"
 export BUNDLE_JOBS=4
 
-export GOPATH="$HOME/labs/go"
 export RUSTPATH="$HOME/.cargo/bin"
-export PATH=$PATH:$GOPATH/bin:$RUSTPATH
+export PATH=$PATH:$RUSTPATH
 
-export EDITOR=vim
+export EDITOR=nvim
 
 # aliases
 alias ctag='/usr/local/Cellar/ctags/5.8_1/bin/ctags -R --exclude=.git --exclude=log *'

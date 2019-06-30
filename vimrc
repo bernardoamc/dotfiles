@@ -1,60 +1,21 @@
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Packages
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'junegunn/fzf'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'godlygeek/tabular'
-Plugin 'tpope/vim-commentary'
-Plugin 'kana/vim-textobj-user'
-Plugin 'mileszs/ack.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'itchyny/lightline.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'tpope/vim-surround'
-
-" Additional language support
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'elzr/vim-json'
-Plugin 'rstacruz/sparkup'
-Plugin 'evanmiller/nginx-vim-syntax'
-Plugin 'lambdatoast/elm.vim'
-Plugin 'rust-lang/rust.vim'
-Plugin 'cespare/vim-toml'
-Plugin 'rhysd/vim-crystal'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'pangloss/vim-javascript'
-
-" Colour schemes
-Plugin 'trusktr/seti.vim'
-
-call vundle#end()
-filetype plugin indent on
-
-set background=dark
-let t_Co = 265
-colorscheme seti
+execute pathogen#infect()
 
 set shell=/bin/bash
 
 set number
 set ruler
 
+" colors
+set t_Co=256
+color summerfruit256
+
 " use the system clipboard
  set clipboard=unnamed
 
 " enable bash style tab completion
  set wildmenu
- set wildmode=list:longest,full
+" set wildmode=list:longest,full
+ set wildmode=list:longest,list:full
 
 " Set the leader key
  let mapleader = ","
@@ -62,20 +23,7 @@ set ruler
 "FZF
  set rtp+=/usr/local/opt/fzf
  map <leader>f :FZF<CR>
-
-" Use rg instead of ack
- let g:ackprg = 'rg --vimgrep'
-
-" vim-markdown
- let g:vim_markdown_folding_disabled = 1
-
-" vim-json
- let g:vim_json_syntax_conceal = 0
-
-" vim-ruby
- let g:ruby_indent_access_modifier_style = 'normal'
- let g:ruby_indent_assignment_style = 'variable'
- let g:ruby_indent_block_style = 'do'
+ map <leader>g :call fzf#run({'source': 'git diff --name-only $(git rev-parse --abbrev-ref HEAD)..master', 'sink': 'e'})<CR>
 
 " Hides buffer instead of closing them
  set hidden
@@ -87,13 +35,25 @@ set ruler
 
  set encoding=utf-8
 
+" Set a column at 80 character
+" set colorcolumn=80
+
+" lightline Plugin
+ set laststatus=2
+ set noshowmode
+
+" NerdTree
+ map <leader>t :NERDTreeToggle<CR>
+ let g:NERDTreeShowLineNumbers=1
+ let NERDTreeMinimalUI = 1
+
 " Highlight searches
  set hlsearch
 
 " Show matches as i type
  set incsearch
 
-" Tab ou shift+tab numa selecao
+" Tab ou shift+tab in a selection
  vmap <Tab> >gv
  vmap <S-Tab> <gv
 
@@ -118,38 +78,50 @@ set ruler
 
  set nocompatible      " We're running Vim, not Vi!
  syntax on             " Enable syntax highlighting
- filetype plugin indent on
+ filetype on           " Enable filetype detection
+ filetype plugin on    " Enable filetype-specific plugins
 
 " map git commands
  map <leader>b :Gblame<cr>
+ map <leader>l :!clear && git log -p %<cr>
+ map <leader>d :!clear && git diff %<cr>
  map <leader>y :!pbcopy<bar>pbpaste<cr>
 
+ let g:go_highlight_functions = 1
+ let g:go_highlight_methods = 1
+ let g:go_highlight_fields = 1
+ let g:go_highlight_types = 1
+ let g:go_highlight_operators = 1
+ let g:go_highlight_build_constraints = 1
+
 "ctags
- set tags=./tags;/
- nnoremap <leader>. :CtrlPTag<cr>
+set tags=./tags;/
+nnoremap <leader>. :CtrlPTag<cr>
 
 " remap bufexplorer
- nnoremap <leader>e :BufExplorer<cr>
+nnoremap <leader>e :BufExplorer<cr>
+
+" remap ripgrep
+nnoremap <leader>r :Rg
+let g:rg_highlight = 1
+
+" toggle class methods
+map <leader>l :TlistToggle<cr>
+map <BS> :noh<CR>
+
+" let AsyncRun open quickfix window
+let g:asyncrun_open = 8
 
 " Tab completion
 " will insert tab at beginning of line,
 " will use completion if not at beginning
- set wildmode=list:longest,list:full
- set complete=.,w,t
- function! InsertTabWrapper()
-     let col = col('.') - 1
-     if !col || getline('.')[col - 1] !~ '\k'
-         return "\<tab>"
-     else
-         return "\<c-p>"
-     endif
- endfunction
- inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-
-" toggle class methods
- map <leader>l :TlistToggle<cr>
- map <BS> :noh<CR>
-
-" NerdTree
-" NERDTree
- nnoremap <leader>t :NERDTreeToggle<CR>
+set complete=.,w,t
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>

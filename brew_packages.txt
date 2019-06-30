@@ -8,3 +8,6 @@ tig
 watchexec
 zsh
 shellcheck
+ctags
+httpie
+tldr
