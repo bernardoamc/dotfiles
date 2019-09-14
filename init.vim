@@ -1,13 +1,7 @@
-execute pathogen#infect()
-
 set shell=/bin/bash
 
 set number
 set ruler
-
-" colors
-set t_Co=256
-color summerfruit256
 
 " use the system clipboard
  set clipboard=unnamed
@@ -41,6 +35,24 @@ color summerfruit256
 " lightline Plugin
  set laststatus=2
  set noshowmode
+
+call plug#begin()
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'stefandtw/quickfix-reflector.vim'
+Plug 'jremmen/vim-ripgrep'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-fugitive'
+call plug#end()
+
+" colors
+set t_Co=256
+set background=light
+colorscheme PaperColor
 
 " NerdTree
  map <leader>t :NERDTreeToggle<CR>
