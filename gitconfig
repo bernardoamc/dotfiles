@@ -21,7 +21,6 @@
   ps = push
   pl = pull
   dlc = diff --cached HEAD^
-  me = config user.email "opingow@gmail.com"
 
 [user]
 	name = Bernardo Chaves
@@ -30,18 +29,19 @@
 [core]
   excludesfile = ~/.gitignore
   autoclrf = input
+  commitGraph = true
 
 [editor]
-editor = vim
+  editor = nvim
 
 [hub]
-protocol = https
+  protocol = https
 
 [merge]
-ff = false
+  ff = false
 
 [push]
-	default = current
+  default = current
 
 [pull]
-rebase = true
+  rebase = true
