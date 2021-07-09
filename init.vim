@@ -29,30 +29,27 @@ set ruler
 
  set encoding=utf-8
 
-" Set a column at 80 character
-" set colorcolumn=80
-
 " lightline Plugin
  set laststatus=2
  set noshowmode
 
 call plug#begin()
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'jlanzarotta/bufexplorer'
-Plug 'junegunn/fzf.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'stefandtw/quickfix-reflector.vim'
-Plug 'jremmen/vim-ripgrep'
-Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-fugitive'
+  Plug 'lifepillar/vim-solarized8'
+  Plug 'skywind3000/asyncrun.vim'
+  Plug 'jlanzarotta/bufexplorer'
+  Plug 'junegunn/fzf.vim'
+  Plug 'itchyny/lightline.vim'
+  Plug 'stefandtw/quickfix-reflector.vim'
+  Plug 'jremmen/vim-ripgrep'
+  Plug 'tpope/vim-surround'
+  Plug 'terryma/vim-multiple-cursors'
+  Plug 'tpope/vim-fugitive'
+  Plug 'scrooloose/nerdtree'
 call plug#end()
 
 " colors
-set t_Co=256
 set background=light
-colorscheme PaperColor
+colorscheme solarized8
 
 " NerdTree
  map <leader>t :NERDTreeToggle<CR>
@@ -99,13 +96,6 @@ colorscheme PaperColor
  map <leader>d :!clear && git diff %<cr>
  map <leader>y :!pbcopy<bar>pbpaste<cr>
 
- let g:go_highlight_functions = 1
- let g:go_highlight_methods = 1
- let g:go_highlight_fields = 1
- let g:go_highlight_types = 1
- let g:go_highlight_operators = 1
- let g:go_highlight_build_constraints = 1
-
 "ctags
 set tags=./tags;/
 nnoremap <leader>. :CtrlPTag<cr>
@@ -124,16 +114,11 @@ map <BS> :noh<CR>
 " let AsyncRun open quickfix window
 let g:asyncrun_open = 8
 
-" Tab completion
-" will insert tab at beginning of line,
-" will use completion if not at beginning
-set complete=.,w,t
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+" asm syntax to always e nasm
+let g:asmsyntax = 'nasm'
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
